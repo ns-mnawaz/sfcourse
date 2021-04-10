@@ -10,19 +10,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/", name="homeIndex")
      */
     public function index(): Response
     {
-        return new Response('<h1> Welcome </h1>');
+        return $this->render('home/index.html.twig');
     }
 
     /**
-     * @Route("/custom/{name?}", name="custom")
+     * @Route("/custom/{name?}", name="homeCustom")
      */
     public function custom(Request $request): Response
     {
-        dump($request);
-        return new Response('<h1> Custom </h1>');
+        $name = $request->get('name');
+        return $this->render('home/custom.html.twig', [ 'name'=> $name ]);
     }
 }
