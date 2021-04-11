@@ -5,30 +5,11 @@
 {% block body %}
 
 <div class="post-show-wrapper">
-    <h1>Post! ✅</h1>
-    <h2>Details of the post.</h2>
+    <h1>Post Details! ✅</h1>
+    <hr/>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Title</td>
-                <td>Actions</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ post.id }}</td>
-                <td>
-                    <a href="{{ path('post.show', { id: post.id }) }}"> {{ post.title }} </a>
-                </td>
-                <td>
-                    <a class="text-danger"
-                       href="{{ path('post.remove', { id: post.id }) }}"
-                    > Delete </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <h3>{{ post.id }}</h3>
+    <h2>{{ post.title }}</h2>
+    <img src="{{ '/uploads/' ~ post.image }}" alt="Post Image" />
 </div>
 {% endblock %}
