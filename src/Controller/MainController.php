@@ -11,6 +11,8 @@ class MainController extends AbstractController
 {
     /**
      * @Route("/", name="homeIndex")
+     * @return Response
+     *
      */
     public function index(): Response
     {
@@ -19,6 +21,8 @@ class MainController extends AbstractController
 
     /**
      * @Route("/custom/{name?}", name="homeCustom")
+     * @param Request $request
+     * @return Response
      */
     public function custom(Request $request): Response
     {
