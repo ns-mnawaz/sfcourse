@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Services\FileUploader;
+use App\Services\Notification;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,8 +23,7 @@ class PostController extends AbstractController
      * @param PostRepository $postRepository
      * @return Response
      */
-    public function index(PostRepository $postRepository): Response
-    {
+    public function index(PostRepository $postRepository): Response {
         $posts = $postRepository->findAll();
 
         return $this->render('post/index.html.twig', [ 'posts' => $posts ]);
@@ -31,9 +32,10 @@ class PostController extends AbstractController
     /**
      * @Route("/create", name="create")
      * @param Request $request
+     * @param FileUploader $fileUploader
      * @return Response
      */
-    public function create(Request $request): Response{
+    public function create(Request $request, FileUploader $fileUploader, Notification $notification): Response {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -46,16 +48,12 @@ class PostController extends AbstractController
             $file = $request->files->get('post')['image_attachment'];
 
             if($file){
-                $filename = md5(uniqid()). '.'.$file->guessClientExtension();
-                $file->move(
-                    $this->getParameter('uploads_dir'),
-                    $filename
-                );
-                $post->setImage($filename);
-            }
+                $filename = $fileUploader->uploadFile($file);
 
-            $em->persist($post);
-            $em->flush();
+                $post->setImage($filename);
+                $em->persist($post);
+                $em->flush();
+            }
 
             $this->addFlash('success', 'Post was created ✅');
 
@@ -67,14 +65,13 @@ class PostController extends AbstractController
 
     /**
      * @Route("/show/{id}", name="show")
-     * @param $id
-     * @param PostRepository $postRepository
+     * @param Post $post
      * @return Response
      */
-    public function show($id, PostRepository $postRepository): Response {
-        $post = $postRepository->find($id);
-
-        return $this->render('post/show.html.twig', [ 'post'=>$post ]);
+    public function show(Post $post): Response {
+        return $this->render('post/show.html.twig', [
+            'post' => $post
+        ]);
     }
 
     /**

@@ -19,6 +19,19 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    public function findByCategoryId(int $id){
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p.title')
+            ->addSelect('p.id AS post_id')
+            ->addSelect('c.name')
+            ->addSelect('c.id AS category_id')
+            ->innerJoin('p.category', 'c')
+            ->where('p.id = :id')
+            ->setParameter('id', $id)
+            ;
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */
