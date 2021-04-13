@@ -26,12 +26,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('homeCustom', { name: 'Symfony' }) }}">Greet</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('post.index') }}">Posts</a>
-                    </li>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('post.index') }}">Posts</a>
+                        </li>
                         <li class="nav-item float-right">
                             <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                        </li>
+                    {% endif %}
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item float-right">
+                            <a class="nav-link" href="{{ path('app_login') }}">Login</a>
                         </li>
                     {% endif %}
                 </ul>

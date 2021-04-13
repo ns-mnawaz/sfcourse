@@ -35,7 +35,8 @@ class PostController extends AbstractController
      * @param FileUploader $fileUploader
      * @return Response
      */
-    public function create(Request $request, FileUploader $fileUploader, Notification $notification): Response {
+//    public function create(Request $request, FileUploader $fileUploader, Notification $notification): Response {
+    public function create(Request $request, FileUploader $fileUploader): Response {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
