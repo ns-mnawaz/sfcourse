@@ -11,3 +11,9 @@
 .idea
 public/uploads
 !public/uploads/.keep
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
