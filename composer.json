@@ -77,6 +77,8 @@
         }
     },
   "require-dev": {
-    "ext-json": "*"
-  }
+        "ext-json": "*",
+        "behat/behat": "^3.8",
+        "symfony/web-server-bundle": "^4.4.2"
+    }
 }

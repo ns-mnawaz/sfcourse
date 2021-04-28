@@ -20,4 +20,5 @@ $ php bin/console app:create-user user12 passwrod admin,user
 $ symfony php bin/phpunit tests/unit/
 $ symfony php bin/phpunit tests/feature/
 $ symfony php bin/phpunit tests/integration/
+$ vendor/bin/behat
 ```
